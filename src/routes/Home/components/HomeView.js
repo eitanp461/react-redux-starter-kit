@@ -6,23 +6,52 @@ import getRandomTransformations from '../../../image-transformations'
 
 console.log(getRandomTransformations())
 
-export const HomeView = ({images}) => (
+const getSelectedImageTitle = (images) => {
+  return images.reduce((title, currentImage) => {
+    if (currentImage.isSelected) {
+      return currentImage.title
+    }
+    return title
+  }, '')
+}
+
+const getSelectedImageUrl = (images) => {
+  return images.reduce((url, currentImage) => {
+    if (currentImage.isSelected) {
+      return currentImage.url
+    }
+    return url
+  }, '')
+}
+
+export const HomeView = ({images, onImageSelection}) => (
   <div>
     <div id='simpsons-container' className={classes.simpsonsContainer}>
       <h2 className={classes.selectCharacter}>Select your favorite character:</h2>
-      {images.map((image) =>
-        <SimpsonView title={image.title} img={image.url} />
+      {images.map((image, index) =>
+        <SimpsonView
+        key={image.url}
+        title={image.title}
+        img={image.url}
+        onClick={() => onImageSelection(index)}
+       />
       )}
     </div>
     <div className={classes.transformations}>
       <button id='feeling-lucky' className={classes.feelingLucky}>I'm Feeling Lucky</button>
-      <div id='preview-selected' className={classes.previewSelected} />
+      <div id='preview-selected' className={classes.previewSelected}>
+        <SimpsonView
+        title={getSelectedImageTitle(images)}
+        img={getSelectedImageUrl(images)}
+        />
+      </div>
     </div>
   </div>
 )
 
 HomeView.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired
+  images: PropTypes.array.isRequired,
+  onImageSelection: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -33,9 +62,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // onTodoClick: (id) => {
-    //   dispatch(toggleTodo(id))
-    // }
+    onImageSelection: (imageIndex) =>
+      dispatch({
+        type: 'SELECT_IMAGE',
+        payload: imageIndex
+      })
   }
 }
 
