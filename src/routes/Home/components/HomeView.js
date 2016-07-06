@@ -1,6 +1,9 @@
 import React from 'react'
 import classes from './HomeView.scss'
 import SimpsonView from './SimpsonView.js'
+import getRandomTransformations from '../../../image-transformations'
+
+console.log(getRandomTransformations())
 
 export const HomeView = () => (
   <div>
