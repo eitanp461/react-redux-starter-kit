@@ -1,4 +1,4 @@
-import randomTransform from '../image-transformations';
+import randomTransform from '../image-transformations'
 
 export default function selectedTransformationRedcuer (state = '', action) {
   switch (action.type) {

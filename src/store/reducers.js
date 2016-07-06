@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
 
-import selectedTransformation from '../reducers/selected-transformation'
-import simpsonsSelectionReducer from '../reducers/simpsons-selection-reducer'
+import selectedImage from '../reducers/simpsons-selection-reducer'
+import images from '../reducers/gallery-reducer'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     // Add sync reducers here
-    selectedTransformation,
-    simpsonsSelectionReducer,
+    selectedImage,
+    images,
     router,
     ...asyncReducers
   })
